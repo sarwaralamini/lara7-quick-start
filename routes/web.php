@@ -12,7 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/* Deactivated Default Auth Routes */
+Auth::routes([
+    'login' => false, // Registration Routes...
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+  ]);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* New Auth Route To Front Page */
+Route::get('/','Auth\LoginController@showLoginForm')->name('login');
+Route::post('/','Auth\LoginController@login');
+
+/* Dashboard Route */
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
+/* Blank Page Route */
+Route::get('/blank', 'HomeController@blank')->name('blank');
