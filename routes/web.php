@@ -27,5 +27,16 @@ Route::post('/','Auth\LoginController@login');
 /* Dashboard Route */
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+/* User Profile */
+Route::get('profile', 'ProfileController@index')->name('profile');
+Route::post('profile', 'ProfileController@create')->name('profile-create');
+Route::post('profile-update', 'ProfileController@update')->name('profile-update');
+Route::post('profile-image-update', 'ProfileController@profleImageUpdate')->name('profile-image-update');
+Route::post('profile-social-update', 'ProfileController@profleSocialUpdate')->name('profile-social-update');
+
+/* Password */
+Route::get('security/password', 'ProfileController@password')->name('password');
+Route::post('security/password/update', 'ProfileController@passwordUpdate')->name('password-update');
+
 /* Blank Page Route */
 Route::get('/blank', 'HomeController@blank')->name('blank');

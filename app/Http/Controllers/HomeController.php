@@ -28,13 +28,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $user = Auth::user();
-
-        $user->assignRole('Admin');
-
-        dd($user);
-
         return view('backend.dashboard');
     }
 
