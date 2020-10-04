@@ -20,5 +20,12 @@
                 <span class="app-menu__label">Blank Page</span>
             </a>
         </li>
+
+        <li>
+            <a class="app-menu__item {{ (request()->is('settings*')) ? 'active' : '' }}" href="{{ route('settings') }}">
+                <i class="app-menu__icon fa fa-cog"></i>
+                <span class="app-menu__label">Settings</span>
+            </a>
+        </li>
     </ul>
 </aside>

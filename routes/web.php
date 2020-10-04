@@ -38,5 +38,11 @@ Route::post('profile-social-update', 'ProfileController@profleSocialUpdate')->na
 Route::get('security/password', 'ProfileController@password')->name('password');
 Route::post('security/password/update', 'ProfileController@passwordUpdate')->name('password-update');
 
+/* Settings */
+Route::get('settings', 'SettingController@index')->name('settings');
+Route::post('settings', 'SettingController@create')->name('settings-create');
+Route::post('settings-update', 'SettingController@update')->name('settings-update');
+Route::post('settings-image-update', 'SettingController@settingsImageUpdate')->name('settings-image-update');
+
 /* Blank Page Route */
 Route::get('/blank', 'HomeController@blank')->name('blank');

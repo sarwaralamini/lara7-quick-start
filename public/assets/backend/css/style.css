@@ -27,3 +27,39 @@
     font-size: 20px;
     font-weight: 400;
 }
+
+.tile .tile-title-md {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+
+/* fix bootstrap-datepicker positional bug */
+
+.datepicker {
+    transform: translate(0, 3.1em);
+}
+
+.view-link,
+.edit-link,
+.delete-link {
+    text-decoration: none!important;
+}
+
+.view-link i {
+    color: #009688;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.edit-link i {
+    color: #6c757d;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.delete-link i {
+    color: #dc3545;
+    font-size: 20px;
+}
