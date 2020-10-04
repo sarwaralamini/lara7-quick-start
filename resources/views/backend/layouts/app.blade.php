@@ -30,8 +30,39 @@
     <script src="{{ asset('assets/backend/js/main.js') }}"></script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="{{ asset('assets/backend/js/plugins/pace.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/backend/js/plugins/bootstrap-notify-3.1.3.min.js') }}"></script>
     <!-- Page specific javascripts-->
     <!-- Dinamic JS -->
     @stack('js')
+
+    @if(session('errorMessage'))
+        <script>
+            $.notify({
+                title: "Error : ",
+                message: '{{ session('errorMessage') }}'
+            },{
+                type: "danger",
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        </script>
+    @endif
+
+    @if(session('successMessage'))
+        <script>
+            $.notify({
+                title: "Success : ",
+                message: '{{ session('successMessage') }}'
+            },{
+                type: "success",
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        </script>
+    @endif
   </body>
 </html>

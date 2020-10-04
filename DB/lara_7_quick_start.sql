@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 21, 2020 at 05:14 PM
+-- Generation Time: Oct 04, 2020 at 12:54 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -62,7 +62,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2020_08_12_202011_create_permission_tables', 1),
-(5, '2020_09_21_154722_create_profiles_table', 2);
+(5, '2020_09_21_154722_create_profiles_table', 2),
+(6, '2020_10_04_085205_create_settings_table', 3),
+(7, '2020_10_04_093940_create_pages_table', 4);
 
 -- --------------------------------------------------------
 
@@ -104,6 +106,29 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pages`
+--
+
+DROP TABLE IF EXISTS `pages`;
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'user', '2020-10-04 05:15:56', '2020-10-04 05:15:56'),
+(2, 'role', '2020-10-04 05:16:44', '2020-10-04 05:16:44');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -129,14 +154,22 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'all permissions', 'web', '2020-08-14 10:44:45', '2020-08-14 10:44:45');
+(1, 'master', 'web', '2020-10-04 05:26:13', '2020-10-04 05:26:13'),
+(2, 'user view', 'web', '2020-10-04 06:01:38', '2020-10-04 06:01:38'),
+(3, 'user add', 'web', '2020-10-04 06:01:38', '2020-10-04 06:01:38'),
+(4, 'user edit', 'web', '2020-10-04 06:01:39', '2020-10-04 06:01:39'),
+(5, 'user delete', 'web', '2020-10-04 06:01:39', '2020-10-04 06:01:39'),
+(6, 'role view', 'web', '2020-10-04 06:01:49', '2020-10-04 06:01:49'),
+(7, 'role add', 'web', '2020-10-04 06:01:49', '2020-10-04 06:01:49'),
+(8, 'role edit', 'web', '2020-10-04 06:01:49', '2020-10-04 06:01:49'),
+(9, 'role delete', 'web', '2020-10-04 06:01:49', '2020-10-04 06:01:49');
 
 -- --------------------------------------------------------
 
@@ -192,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'web', '2020-08-14 10:44:45', '2020-08-14 10:44:45');
+(1, 'developer', 'web', '2020-10-04 05:26:13', '2020-10-04 05:26:13');
 
 -- --------------------------------------------------------
 
@@ -214,6 +247,33 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `site_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_keywords` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `site_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_robots` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_image_width` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_image_height` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_app_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_card` enum('summary','summary_large_image','app','player') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site_creator` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -244,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `phone`, `email_verified_at`, `password`, `active_status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 'admin', 'admin@website.com', '017XXXXXXXX', NULL, '$2y$10$rKjLnGgbY0l4J7E/4oNSXOJEqz1K11Tywwtw.Io7/Nn1NrHmOWuEO', '1', NULL, NULL, '2020-09-21 11:12:45');
+(1, 'Site Developer', 'developer', 'developer@website.com', '017XXXXXXXX', NULL, '$2y$10$rKjLnGgbY0l4J7E/4oNSXOJEqz1K11Tywwtw.Io7/Nn1NrHmOWuEO', '1', NULL, NULL, '2020-09-21 11:12:45');
 
 --
 -- Constraints for dumped tables

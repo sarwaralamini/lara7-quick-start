@@ -44,5 +44,9 @@ Route::post('settings', 'SettingController@create')->name('settings-create');
 Route::post('settings-update', 'SettingController@update')->name('settings-update');
 Route::post('settings-image-update', 'SettingController@settingsImageUpdate')->name('settings-image-update');
 
+/* Permissions */
+Route::resource('permissions', 'PermissionController')->except([
+    'show', 'store', 'update', 'destroy'
+]);
 /* Blank Page Route */
 Route::get('/blank', 'HomeController@blank')->name('blank');
