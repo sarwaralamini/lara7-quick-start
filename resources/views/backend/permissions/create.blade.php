@@ -34,7 +34,7 @@
                                         <span class="text-danger">**</span>  only specify crud name.
                                         It will automatically generate all related permissions for the crud.
                                         e.g. If you want a crud for categories, just put "category" as CRUD name.
-                                        It will generate follwing permissions for category: category view, category add, category edit, category delete
+                                        It will generate follwing permissions for category: category view, category create, category edit, category delete
                                     </small>
                                 </div>
                             </div>
