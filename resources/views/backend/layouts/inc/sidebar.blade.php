@@ -1,6 +1,11 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+    <div class="app-sidebar__user">
+        @if(Auth::user()->profile != NULL)
+            <img class="app-sidebar__user-avatar" src="{{ asset('storage/uploads/profile/'.Auth::user()->profile->image) }}" alt="User Avatar" style="width:50px;">
+        @else
+            <img class="app-sidebar__user-avatar" src="{{ asset('assets/backend/img/avatar.png') }}" alt="User Avatar" style="width:50px;">
+        @endif
     <div>
         <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
         <p class="app-sidebar__user-designation">Backend Developer</p>
@@ -21,8 +26,8 @@
             </a>
         </li>
 
-        @if(auth()->user()->hasanyrole('developer') || auth()->user()->hasAnyPermission(['master', 'user view']))
-            <li class="treeview {{ (request()->is('permissions*')) ? 'is-expanded' : '' }}">
+        @if(auth()->user()->hasanyrole('developer') || auth()->user()->hasAnyPermission(['master', 'user view', 'role view']))
+            <li class="treeview {{ (request()->is('permissions*') || request()->is('roles*')) ? 'is-expanded' : '' }}">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
                     <i class="app-menu__icon fa fa-users"></i>
                     <span class="app-menu__label">Users Management</span>
@@ -35,7 +40,12 @@
                             <i class="icon fa fa-long-arrow-right"></i> Permissions</a>
                         </li>
                     @endif
-                    <li><a class="treeview-item" href="#"><i class="icon fa fa-long-arrow-right"></i> Roles</a></li>
+
+                    @if(auth()->user()->hasrole('developer') || auth()->user()->hasAnyPermission(['master', 'role view']))
+                        <li><a class="treeview-item {{ (request()->is('roles*')) ? 'active' : '' }}" href="{{ route('roles.index') }}">
+                            <i class="icon fa fa-long-arrow-right"></i> Roles</a>
+                        </li>
+                    @endif
                 </ul>
             </li>
         @endif

@@ -48,5 +48,9 @@ Route::post('settings-image-update', 'SettingController@settingsImageUpdate')->n
 Route::resource('permissions', 'PermissionController')->except([
     'show', 'update', 'destroy'
 ]);
+
+/* Role */
+Route::resource('roles', 'RoleController');
+
 /* Blank Page Route */
 Route::get('/blank', 'HomeController@blank')->name('blank');
