@@ -37,7 +37,9 @@
                                             <td>{{ ucfirst($post->name) }}</td>
                                             <td>
                                                 @foreach($post->permissions as $permission)
-                                                    {{ $permission->name }}
+                                                    <span class="badge badge-primary mb-2" style="font-size: 12px;">
+                                                        {{ str_replace(['-', '_'], ' ', $permission->name) }}
+                                                    </span>
                                                 @endforeach
                                             </td>
                                             <td class="text-center">

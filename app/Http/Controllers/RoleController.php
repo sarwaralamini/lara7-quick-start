@@ -59,7 +59,14 @@ class RoleController extends Controller
             'permissions'           => 'required'
         ]);
 
-        dd($validatedData);
+        $role = Role::create(['name' => strtolower($validatedData['name'])]);
+
+        if($role)
+        {
+            $role->givePermissionTo($validatedData['permissions']);
+            return redirect()->route('roles.index')->with('successMessage', 'Role successfully created!');
+        }
+        return redirect()->route('roles.index')->with('errorMessage', 'An error has occurred please try again later!');
     }
 
     /**
@@ -70,7 +77,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view('roles.edit', compact('role'));
     }
 
     /**
@@ -81,7 +88,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        $pages = Page::All();
+        return view('backend.roles.edit', compact('pages','role'));
     }
 
     /**
@@ -93,7 +101,18 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $validatedData = $request->validate([
+            'name'                  => 'required|min:3|max:100|unique:roles,name,'.$role->id,
+            'permissions'           => 'required'
+        ]);
+
+        $role->name = $validatedData['name'];
+        if($role->save())
+        {
+            $role->syncPermissions($validatedData['permissions']);
+            return redirect()->route('roles.index')->with('successMessage', 'Role successfully updated!');
+        }
+        return redirect()->route('roles.index')->with('errorMessage', 'An error has occurred please try again later!');
     }
 
     /**

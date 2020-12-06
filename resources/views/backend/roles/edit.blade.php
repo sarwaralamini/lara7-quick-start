@@ -1,15 +1,15 @@
 @extends('backend.layouts.app')
 
-@section('title','New Role')
+@section('title','Edit Role')
 
 @section('content')
 <div class="app-title">
     <div>
-        New Role</h1>
+        Edit Role</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-        <li class="breadcrumb-item"><a href="#">New Role</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('roles.edit', $role->id) }}">Edit Role</a></li>
     </ul>
     </div>
     <div class="row">
@@ -20,13 +20,14 @@
                 </div>
 
                 <div class="tile-body">
-                    <form action="{{ route('roles.store') }}" method="POST">
+                    <form method="POST" action="{{ route('roles.update',$role->id) }}">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="title">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Role Name" value="{{ old('name') }}">
+                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Role Name" value="{{ old('name', ucfirst($role->name)) }}">
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -44,16 +45,16 @@
                                             <h3 class="tile-title">{{ ucfirst($page->title) }}</h3>
                                             <div class="animated-checkbox">
                                                 <label class="d-block">
-                                                  <input type="checkbox" name="permissions[]" value="{{ $page->title }} view" {{ (collect(old('permissions'))->contains($page->title.' view')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} view</span>
+                                                  <input type="checkbox" name="permissions[]" value="{{ $page->title }} view" {{ (collect(old('permissions', $role->permissions->pluck('name')))->contains($page->title.' view')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} view</span>
                                                 </label>
                                                 <label class="d-block">
-                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} add" {{ (collect(old('permissions'))->contains($page->title.' add')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} add</span>
+                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} add" {{ (collect(old('permissions', $role->permissions->pluck('name')))->contains($page->title.' add')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} add</span>
                                                 </label>
                                                 <label class="d-block">
-                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} edit" {{ (collect(old('permissions'))->contains($page->title.' edit')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} edit</span>
+                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} edit" {{ (collect(old('permissions', $role->permissions->pluck('name')))->contains($page->title.' edit')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} edit</span>
                                                 </label>
                                                 <label class="d-block">
-                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} delete" {{ (collect(old('permissions'))->contains($page->title.' delete')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} delete</span>
+                                                    <input type="checkbox" name="permissions[]" value="{{ $page->title }} delete" {{ (collect(old('permissions', $role->permissions->pluck('name')))->contains($page->title.' delete')) ? 'checked':'' }}><span class="label-text">{{ $page->title }} delete</span>
                                                 </label>
                                               </div>
                                             </div>
